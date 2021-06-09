@@ -1,6 +1,6 @@
-# expense_tracker_flutter
+# Expense Tracker
 
-A new Flutter project.
+This is a weekly expense tracker built on flutter. I've made this project while learning flutter.
 
 ## Getting Started
 
