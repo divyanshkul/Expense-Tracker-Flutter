@@ -48,9 +48,7 @@ class MyHomePage extends StatelessWidget {
             ),
             Column(
                 children: transactions.map((tx) {
-              return Card(
-                child: Text(tx.title),
-              );
+              return Card(child: Text(tx.title + " " + tx.amount.toString()));
             }).toList()),
           ],
         ));
