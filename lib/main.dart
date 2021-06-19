@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
+        accentColor: ,
       ),
       home: MyHomePage(),
     );
@@ -44,6 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(
       id: "t3",
       title: "Thaali",
+      amount: 140,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t4",
+      title: "Mac",
       amount: 140,
       date: DateTime.now(),
     ),
