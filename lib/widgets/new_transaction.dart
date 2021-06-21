@@ -50,7 +50,6 @@ class _NewTransactionState extends State<NewTransaction> {
               controller: amountController,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
-              //onChanged: (value) => amountInput = value,
             ),
             ElevatedButton(
               child: Text('Add Transaction'),
