@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.purple,
+        errorColor: Colors.red,
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
                 fontFamily: 'OpenSans',
@@ -76,16 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
-  List<Transaction> get _recentTransactions {
-    return _userTransactions.where((tx) {
-      return tx.date.isAfter(
-        DateTime.now().subtract(
-          Duration(days: 7),
-        ),
-      );
-    }).toList();
-  }
-
   void _addNewTransaction(
       String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
@@ -108,6 +99,22 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
