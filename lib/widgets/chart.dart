@@ -1,4 +1,5 @@
 import 'package:expense_tracker_flutter/models/transaction.dart';
+import 'package:expense_tracker_flutter/widgets/bar_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -25,9 +26,15 @@ class Chart extends StatelessWidget {
       print(totalSumOfWeek);
 
       return {
-        'day': DateFormat.E().format(weekDay),
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSumOfWeek,
       };
+    });
+  }
+
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
     });
   }
 
@@ -38,7 +45,14 @@ class Chart extends StatelessWidget {
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Row(
-        children: [],
+        children: groupedTransactionValues.map((data) {
+          print('${data['amount']} !!!!!!');
+          return BarChart(
+            data['day'],
+            data['amount'],
+            (data['amount'] as double) / totalSpending,
+          );
+        }).toList(),
       ),
     );
   }
