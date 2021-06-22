@@ -11,7 +11,9 @@ class BarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('\$ ${spendingAmount.toStringAsFixed(0)}'),
+        FittedBox(
+          child: Text('\$ ${spendingAmount.toStringAsFixed(0)}'),
+        ), //FittedBox forces the widget into the available size. Utna hi lega wo
         SizedBox(
           height: 4,
         ),
