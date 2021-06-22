@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
 import './widgets/transaction_list.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +16,23 @@ class MyApp extends StatelessWidget {
       title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.purple,
-        accentColor: ,
+        accentColor: Colors.purple,
+        textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )),
+        fontFamily: 'Quicksand',
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
       ),
       home: MyHomePage(),
     );
@@ -29,31 +46,41 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: "t1",
-      title: "Pizza",
-      amount: 400,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t1",
-      title: "Burger",
-      amount: 120,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t3",
-      title: "Thaali",
-      amount: 140,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t4",
-      title: "Mac",
-      amount: 140,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: "t1",
+    //   title: "Pizza",
+    //   amount: 400,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t1",
+    //   title: "Burger",
+    //   amount: 120,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t3",
+    //   title: "Thaali",
+    //   amount: 140,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: "t4",
+    //   title: "Mac",
+    //   amount: 140,
+    //   date: DateTime.now(),
+    // ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -93,14 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text("Chart!!"),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
